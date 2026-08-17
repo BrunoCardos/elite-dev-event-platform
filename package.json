@@ -1,0 +1,12 @@
+{
+  "name": "elite-dev-event-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Plataforma de eventos e ingressos - Elite Dev Challenge",
+  "scripts": {
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run start:dev",
+    "build:frontend": "npm --prefix frontend run build",
+    "build:backend": "npm --prefix backend run build"
+  }
+}
