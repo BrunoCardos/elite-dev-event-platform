@@ -1,13 +1,195 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
   provider = "prisma-client"
-  output   = "..src/generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+enum UserRole {
+  ORGANIZER
+  CUSTOMER
+  GATEKEEPER
+}
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  CANCELLED
+  FINISHED
+}
+
+enum SeatStatus {
+  AVAILABLE
+  BLOCKED
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  EXPIRED
+}
+
+enum PaymentStatus {
+  PENDING
+  APPROVED
+  DECLINED
+}
+
+enum TicketStatus {
+  ACTIVE
+  USED
+  CANCELLED
+}
+
+enum ValidationResult {
+  VALID
+  INVALID
+  ALREADY_USED
+  WRONG_EVENT
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         UserRole
+
+  events        Event[]
+  reservations  Reservation[]
+  validations   TicketValidation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([role])
+}
+
+model Movie {
+  id          String   @id @default(uuid())
+  tmdbId      Int      @unique
+  title       String
+  overview    String?
+  posterPath  String?
+  releaseDate DateTime?
+
+  events Event[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id          String      @id @default(uuid())
+  movieId     String
+  organizerId String
+
+  title       String
+  description String?
+  eventDate   DateTime
+  venue       String
+  room        String
+  price       Decimal     @db.Decimal(10, 2)
+  capacity    Int
+  status      EventStatus @default(DRAFT)
+
+  movie       Movie         @relation(fields: [movieId], references: [id])
+  organizer   User          @relation(fields: [organizerId], references: [id])
+  seats       Seat[]
+  reservations Reservation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([movieId])
+  @@index([organizerId])
+  @@index([status])
+  @@index([eventDate])
+}
+
+model Seat {
+  id       String     @id @default(uuid())
+  eventId  String
+  row      String
+  number   Int
+  status   SeatStatus @default(AVAILABLE)
+
+  event        Event         @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  reservations Reservation[]
+
+  createdAt DateTime @default(now())
+
+  @@unique([eventId, row, number])
+  @@index([eventId])
+}
+
+model Reservation {
+  id     String            @id @default(uuid())
+  userId String
+  eventId String
+  seatId String
+
+  status    ReservationStatus @default(PENDING)
+  amount    Decimal           @db.Decimal(10, 2)
+  expiresAt DateTime?
+
+  user User @relation(fields: [userId], references: [id])
+  event Event @relation(fields: [eventId], references: [id])
+  seat Seat @relation(fields: [seatId], references: [id])
+
+  payment Payment?
+  ticket  Ticket?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([eventId])
+  @@index([seatId])
+  @@index([status])
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  reservationId String        @unique
+  amount        Decimal       @db.Decimal(10, 2)
+  status        PaymentStatus @default(PENDING)
+  transactionId String        @unique
+
+  reservation Reservation @relation(fields: [reservationId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Ticket {
+  id            String       @id @default(uuid())
+  reservationId String       @unique
+  code          String       @unique
+  qrToken       String       @unique
+  status        TicketStatus @default(ACTIVE)
+  usedAt        DateTime?
+
+  reservation Reservation @relation(fields: [reservationId], references: [id])
+  validation   TicketValidation?
+
+  createdAt DateTime @default(now())
+}
+
+model TicketValidation {
+  id           String          @id @default(uuid())
+  ticketId     String          @unique
+  gatekeeperId String
+  result       ValidationResult
+  validatedAt  DateTime        @default(now())
+
+  ticket     Ticket @relation(fields: [ticketId], references: [id])
+  gatekeeper User   @relation(fields: [gatekeeperId], references: [id])
+
+  @@index([gatekeeperId])
 }
