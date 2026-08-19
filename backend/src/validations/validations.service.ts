@@ -40,7 +40,7 @@ export class ValidationsService {
       return {
         valid: false,
         result: 'ALREADY_USED',
-        message: 'Ticket is not active',
+        message: 'Ticket is already used',
       };
     }
 

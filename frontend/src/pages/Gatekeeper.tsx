@@ -43,13 +43,19 @@ export default function Gatekeeper() {
     setResult(null);
 
     try {
-      const response =
-        await api.post<ValidationResult>(
-          '/tickets/validate',
-          {
-            qrToken: token.trim(),
-          },
-        );
+      const user = JSON.parse(
+        localStorage.getItem('user') || 'null',
+      );
+
+      console.log(user)
+
+      const response = await api.post<ValidationResult>(
+        '/tickets/validate',
+        {
+          qrToken: token.trim(),
+          gatekeeperId: user?.id,
+        },
+      );
 
       setResult(response.data);
     } catch (error: any) {
@@ -99,7 +105,7 @@ export default function Gatekeeper() {
 
           await validateTicket(decodedText);
         },
-        () => {},
+        () => { },
       );
     } catch {
       setScannerActive(false);
@@ -118,7 +124,7 @@ export default function Gatekeeper() {
     try {
       await scannerRef.current.stop();
       scannerRef.current.clear();
-    } catch {}
+    } catch { }
 
     scannerRef.current = null;
     setScannerActive(false);
@@ -129,7 +135,7 @@ export default function Gatekeeper() {
       if (scannerRef.current) {
         scannerRef.current
           .stop()
-          .catch(() => {});
+          .catch(() => { });
       }
     };
   }, []);

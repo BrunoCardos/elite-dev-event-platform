@@ -19,6 +19,7 @@ export class ValidationsController {
       gatekeeperId: string;
     },
   ) {
+
     return this.validationsService.validate(
       body.qrToken,
       body.gatekeeperId,
