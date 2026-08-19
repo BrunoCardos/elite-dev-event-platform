@@ -52,6 +52,11 @@ function App() {
         />
 
         <Route
+          path="/tickets/:id"
+          element={<Ticket />}
+        />
+
+        <Route
           path="/admin"
           element={
             <ProtectedRoute

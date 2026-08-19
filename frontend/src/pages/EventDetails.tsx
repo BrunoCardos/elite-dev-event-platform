@@ -96,31 +96,55 @@ export default function EventDetails() {
       <section>
         <h2>Escolha o seu lugar</h2>
 
-        <div className="screen">
-          ECRÃ
-        </div>
+       <div className="seat-legend">
+  <span>
+    <i className="legend-seat available" />
+    Disponível
+  </span>
 
-        <div className="seat-map">
-          {event.seats.map((seat) => (
-            <button
-              key={seat.id}
-              className={
-                selectedSeat?.id === seat.id
-                  ? 'seat selected'
-                  : 'seat'
-              }
-              disabled={
-                seat.status !== 'AVAILABLE'
-              }
-              onClick={() =>
-                setSelectedSeat(seat)
-              }
-            >
-              {seat.row}
-              {seat.number}
-            </button>
-          ))}
-        </div>
+  <span>
+    <i className="legend-seat selected" />
+    Selecionado
+  </span>
+
+  <span>
+    <i className="legend-seat occupied" />
+    Ocupado
+  </span>
+</div>
+
+<div className="screen">
+  ECRÃ
+</div>
+
+<div className="seat-map">
+  {event.seats.map((seat) => {
+    const isSelected =
+      selectedSeat?.id === seat.id;
+
+    const isOccupied =
+      seat.status !== 'AVAILABLE';
+
+    return (
+      <button
+        key={seat.id}
+        type="button"
+        className={[
+          'seat',
+          isSelected ? 'selected' : '',
+          isOccupied ? 'occupied' : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
+        disabled={isOccupied}
+        onClick={() => setSelectedSeat(seat)}
+      >
+        {seat.row}
+        {seat.number}
+      </button>
+    );
+  })}
+</div>
 
         {selectedSeat && (
           <div className="selection">

@@ -10,7 +10,7 @@ import { PrismaService } from '../prisma/prisma.service';
 export class PaymentsService {
   constructor(
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   async pay(reservationId: string) {
     return this.prisma.$transaction(async (tx) => {
@@ -18,6 +18,10 @@ export class PaymentsService {
         await tx.reservation.findUnique({
           where: {
             id: reservationId,
+          },
+          include: {
+            seat: true,
+            event: true,
           },
         });
 
@@ -27,9 +31,11 @@ export class PaymentsService {
         );
       }
 
-      if (reservation.status !== 'PENDING') {
+      if (
+        reservation.status === 'CONFIRMED'
+      ) {
         throw new BadRequestException(
-          'Reservation is not pending',
+          'Esta reserva já foi paga.',
         );
       }
 
@@ -51,6 +57,15 @@ export class PaymentsService {
         );
       }
 
+      if (
+        reservation.seat.status !== 'AVAILABLE'
+      ) {
+        throw new BadRequestException(
+          'Este assento não está disponível.',
+        );
+      }
+
+
       const transactionId =
         `TX-${randomUUID()}`;
 
@@ -70,6 +85,15 @@ export class PaymentsService {
         },
         data: {
           status: 'CONFIRMED',
+        },
+      });
+
+      await tx.seat.update({
+        where: {
+          id: reservation.seatId,
+        },
+        data: {
+          status: 'BLOCKED',
         },
       });
 
