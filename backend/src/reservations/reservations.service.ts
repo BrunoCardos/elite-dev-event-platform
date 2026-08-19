@@ -79,7 +79,8 @@ export class ReservationsService {
           },
         });
 
-      if (existingReservation) {
+
+      if (existingReservation && existingReservation.expiresAt && existingReservation.expiresAt >= new Date()) {
         throw new BadRequestException(
           'Seat is already reserved',
         );
