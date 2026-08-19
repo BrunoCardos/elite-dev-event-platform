@@ -61,6 +61,7 @@ export class EventsService {
   rows: string[];
   seatsPerRow: number;
 }) {
+
   const organizer = await this.prisma.user.findUnique({
     where: {
       id: data.organizerId,

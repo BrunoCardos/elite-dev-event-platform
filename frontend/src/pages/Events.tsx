@@ -28,13 +28,18 @@ export default function Events() {
 
   return (
     <main>
-      <header>
-        <h1>Próximas sessões</h1>
+     <header className="dashboard-header">
+  <div>
+    <h1>Elite Cinema</h1>
+    <p>Escolha a sua próxima sessão</p>
+  </div>
 
-        <Link to="/tickets">
-          Meus ingressos
-        </Link>
-      </header>
+  <div>
+    <Link to="/tickets">
+      Meus ingressos
+    </Link>
+  </div>
+</header>
 
       <section className="events-grid">
         {events.map((event) => (
