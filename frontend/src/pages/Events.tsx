@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../services/api';
 import type { Event } from '../types';
+import LogoutButton from '../components/LogoutButton';
 
 export default function Events() {
   const [events, setEvents] = useState<Event[]>(
@@ -39,6 +40,8 @@ export default function Events() {
       Meus ingressos
     </Link>
   </div>
+
+  <LogoutButton />
 </header>
 
       <section className="events-grid">

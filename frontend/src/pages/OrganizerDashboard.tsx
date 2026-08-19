@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../services/api';
 import type { Event } from '../types';
+import LogoutButton from '../components/LogoutButton';
 
 export default function OrganizerDashboard() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -25,6 +26,8 @@ export default function OrganizerDashboard() {
           <h1>Dashboard</h1>
           <p>Gestão de sessões</p>
         </div>
+
+        <LogoutButton />
 
         <Link to="/admin/events/new">
           + Criar evento

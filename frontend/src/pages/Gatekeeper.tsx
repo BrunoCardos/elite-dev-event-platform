@@ -1,5 +1,8 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Html5Qrcode } from 'html5-qrcode';
 import { api } from '../services/api';
+import LogoutButton from '../components/LogoutButton';
 
 interface ValidationResult {
   valid: boolean;
@@ -27,15 +30,14 @@ export default function Gatekeeper() {
     useState<ValidationResult | null>(null);
 
   const [loading, setLoading] = useState(false);
+  const [scannerActive, setScannerActive] =
+    useState(false);
 
-  async function handleValidate(
-    event: FormEvent,
-  ) {
-    event.preventDefault();
+  const scannerRef =
+    useRef<Html5Qrcode | null>(null);
 
-    if (!qrToken.trim()) {
-      return;
-    }
+  async function validateTicket(token: string) {
+    if (!token.trim()) return;
 
     setLoading(true);
     setResult(null);
@@ -45,7 +47,7 @@ export default function Gatekeeper() {
         await api.post<ValidationResult>(
           '/tickets/validate',
           {
-            qrToken: qrToken.trim(),
+            qrToken: token.trim(),
           },
         );
 
@@ -62,22 +64,127 @@ export default function Gatekeeper() {
     }
   }
 
+  async function startScanner() {
+    if (scannerActive) return;
+
+    const scanner = new Html5Qrcode(
+      'qr-reader',
+    );
+
+    scannerRef.current = scanner;
+
+    setScannerActive(true);
+
+    try {
+      await scanner.start(
+        {
+          facingMode: 'environment',
+        },
+        {
+          fps: 10,
+          qrbox: {
+            width: 250,
+            height: 250,
+          },
+        },
+        async (decodedText) => {
+          setQrToken(decodedText);
+
+          await scanner.stop();
+
+          scanner.clear();
+
+          scannerRef.current = null;
+          setScannerActive(false);
+
+          await validateTicket(decodedText);
+        },
+        () => {},
+      );
+    } catch {
+      setScannerActive(false);
+
+      setResult({
+        valid: false,
+        message:
+          'Não foi possível acessar a câmera.',
+      });
+    }
+  }
+
+  async function stopScanner() {
+    if (!scannerRef.current) return;
+
+    try {
+      await scannerRef.current.stop();
+      scannerRef.current.clear();
+    } catch {}
+
+    scannerRef.current = null;
+    setScannerActive(false);
+  }
+
+  useEffect(() => {
+    return () => {
+      if (scannerRef.current) {
+        scannerRef.current
+          .stop()
+          .catch(() => {});
+      }
+    };
+  }, []);
+
+  function handleSubmit(
+    event: FormEvent,
+  ) {
+    event.preventDefault();
+
+    validateTicket(qrToken);
+  }
+
   return (
     <main className="gatekeeper">
+      <Link to="/events">
+        ← Voltar
+      </Link>
+
       <div className="gatekeeper-header">
         <h1>Elite Cinema</h1>
         <p>Validação de ingressos</p>
       </div>
+      <LogoutButton />
+
 
       <section className="validator-card">
         <h2>Validar ingresso</h2>
 
-        <p>
-          Insira o código ou QR Token do
-          ingresso.
-        </p>
+        <button
+          type="button"
+          onClick={
+            scannerActive
+              ? stopScanner
+              : startScanner
+          }
+        >
+          {scannerActive
+            ? 'Parar câmera'
+            : '📷 Ler QR Code'}
+        </button>
 
-        <form onSubmit={handleValidate}>
+        <div
+          id="qr-reader"
+          style={{
+            width: '100%',
+            maxWidth: '500px',
+            margin: '20px auto',
+          }}
+        />
+
+        <div className="divider">
+          ou
+        </div>
+
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             value={qrToken}
@@ -85,7 +192,6 @@ export default function Gatekeeper() {
               setQrToken(e.target.value)
             }
             placeholder="Cole o QR Token..."
-            autoFocus
           />
 
           <button
