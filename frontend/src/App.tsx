@@ -8,6 +8,8 @@ import {
 import Login from './pages/Login';
 import Events from './pages/Events';
 import EventDetails from './pages/EventDetails';
+import Checkout from './pages/Checkout';
+import Ticket from './pages/Ticket';
 
 function App() {
   return (
@@ -26,6 +28,16 @@ function App() {
         <Route
           path="/events/:id"
           element={<EventDetails />}
+        />
+
+        <Route
+          path="/checkout"
+          element={<Checkout />}
+        />
+
+        <Route
+          path="/tickets/:id"
+          element={<Ticket />}
         />
 
         <Route
