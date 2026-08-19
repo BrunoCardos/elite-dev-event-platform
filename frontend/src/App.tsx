@@ -12,6 +12,8 @@ import Checkout from './pages/Checkout';
 import Ticket from './pages/Ticket';
 import OrganizerDashboard from './pages/OrganizerDashboard';
 import CreateEvent from './pages/CreateEvent';
+import Gatekeeper from './pages/Gatekeeper';
+import MyTickets from './pages/MyTickets';
 
 function App() {
   return (
@@ -38,6 +40,11 @@ function App() {
         />
 
         <Route
+  path="/tickets"
+  element={<MyTickets />}
+/>
+
+        <Route
           path="/tickets/:id"
           element={<Ticket />}
         />
@@ -50,6 +57,11 @@ function App() {
 <Route
   path="/admin/events/new"
   element={<CreateEvent />}
+/>
+
+<Route
+  path="/gatekeeper"
+  element={<Gatekeeper />}
 />
 
         <Route
