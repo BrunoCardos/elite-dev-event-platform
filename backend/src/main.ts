@@ -1,5 +1,6 @@
-import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
+import { NestFactory } from '@nestjs/core';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -8,6 +9,21 @@ async function bootstrap() {
     origin: 'http://localhost:5173',
     credentials: true,
   });
+
+  const config = new DocumentBuilder()
+    .setTitle('Elite Cinema API')
+    .setDescription(
+      'API para gerenciamento de filmes, eventos, assentos, reservas, pagamentos, tickets e validação de entradas.',
+    )
+    .setVersion('1.0.0')
+    .build();
+
+  const document = SwaggerModule.createDocument(
+    app,
+    config,
+  );
+
+  SwaggerModule.setup('docs', app, document);
 
   await app.listen(process.env.PORT ?? 3000);
 }

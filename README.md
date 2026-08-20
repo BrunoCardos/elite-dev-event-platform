@@ -16,10 +16,19 @@ Sistema de gestão e venda de ingressos para sessões de cinema.
 - TypeScript
 - Prisma
 - PostgreSQL
+- Swagger / OpenAPI
 
 ### Integrações
 - TMDb
 - QR Code
+
+### API Documentation
+
+A API possui documentação interativa através do Swagger.
+
+Após iniciar o backend, a documentação pode ser acessada em:
+
+http://localhost:3000/docs
 
 ## Funcionalidades
 
