@@ -38,7 +38,7 @@ O frontend é desenvolvido com:
 A aplicação é uma SPA e utiliza React Router para controlar as diferentes páginas.
 
 ### Principais páginas
-
+```text
 /login
 /events
 /events/:id
@@ -50,6 +50,7 @@ A aplicação é uma SPA e utiliza React Router para controlar as diferentes pá
 /admin/events/new
 
 /gatekeeper
+```
 
 ## Backend
 
@@ -97,6 +98,7 @@ Frontend e backend comunicam através de uma API REST.
 
 Exemplo:
 
+```text
 React
   |
   | GET /events
@@ -108,11 +110,13 @@ Prisma
   |
   ▼
 PostgreSQL
+```
 
 ---
 
 ## Fluxo de compra
 
+```text
 Cliente
    │
    ▼
@@ -138,11 +142,12 @@ Ticket
    │
    ▼
 QR Code
+```
 
----
 
 ## Fluxo de validação
 
+```text
 Gatekeeper
     │
     ▼
@@ -165,7 +170,7 @@ Validação do ticket
        Ticket marcado
        como utilizado
 
----
+```
 
 ## Perfis
 
@@ -198,6 +203,7 @@ Pode:
 
 ## Estrutura do Projeto
 
+```text
 elite-dev/
 │
 ├── backend/
@@ -221,3 +227,4 @@ elite-dev/
 │       └── types/
 │
 └── docs/
+```

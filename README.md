@@ -5,6 +5,7 @@ Sistema de gestão e venda de ingressos para sessões de cinema.
 ## Tecnologias
 
 ### Frontend
+
 - React
 - Vite
 - TypeScript
@@ -12,6 +13,7 @@ Sistema de gestão e venda de ingressos para sessões de cinema.
 - Axios
 
 ### Backend
+
 - NestJS
 - TypeScript
 - Prisma
@@ -19,6 +21,7 @@ Sistema de gestão e venda de ingressos para sessões de cinema.
 - Swagger / OpenAPI
 
 ### Integrações
+
 - TMDb
 - QR Code
 
@@ -28,11 +31,12 @@ A API possui documentação interativa através do Swagger.
 
 Após iniciar o backend, a documentação pode ser acessada em:
 
-http://localhost:3000/docs
+<http://localhost:3000/docs>
 
 ## Funcionalidades
 
 ### Cliente
+
 - Login
 - Visualização de sessões
 - Consulta de filmes
@@ -44,6 +48,7 @@ http://localhost:3000/docs
 - QR Code
 
 ### Organizador
+
 - Dashboard
 - Pesquisa de filmes no TMDb
 - Criação de sessões
@@ -52,6 +57,7 @@ http://localhost:3000/docs
 - Definição de preço
 
 ### Gatekeeper
+
 - Leitura de QR Code
 - Validação de ingresso
 - Verificação da sessão
@@ -68,22 +74,30 @@ npm install
 npm run seed
 npm run start:dev
 ```
+
 #### Enviroment Variables
+
+```text
 DATABASE_URL=...
 TMDB_API_KEY=...
 JWT_SECRET=...
+```
 
 ### Frontend
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+
 ## Profiles
 
+```text
 customer1@test.com
 customer2@test.com
 organizer@test.com
 gatekeeper@test.com
 
 Password: Passsword123!
+```

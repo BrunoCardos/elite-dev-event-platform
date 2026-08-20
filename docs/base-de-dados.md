@@ -15,7 +15,7 @@ A base de dados foi modelada para representar:
 - Tickets;
 - Validações.
 
----
+
 
 ## User
 
@@ -93,9 +93,12 @@ Principais campos:
 
 ## Estados:
 
+
+```text
 AVAILABLE
 RESERVED
 OCCUPIED
+```
 
 Cada evento possui os seus próprios assentos.
 
@@ -109,16 +112,21 @@ Representa uma reserva de um assento.
 
 Relaciona:
 
+
+```text
 User
 Event
 Seat
+```
 
 Estados possíveis:
 
+```text
 PENDING
 CONFIRMED
 CANCELLED
 EXPIRED
+```
 
 ## Payment
 
@@ -126,8 +134,10 @@ Representa o pagamento associado a uma reserva.
 
 Estados:
 
+```text
 APPROVED
 DECLINED
+```
 
 ## Ticket
 
@@ -137,9 +147,11 @@ Relaciona-se com a reserva.
 
 Estados:
 
+```text
 ACTIVE
 USED
 CANCELLED
+```
 
 Cada ticket possui um qrToken utilizado para gerar e validar o QR Code.
 
@@ -154,6 +166,7 @@ Gatekeeper/User
 
 A relação única com o ticket permite impedir múltiplas validações do mesmo ingresso.
 
+```text
 Relacionamentos
 User
  │
@@ -177,9 +190,11 @@ Movie
                               ├──── Payment
                               │
                               └──── Ticket
-
+```
 
 ## Fluxo dos dados
+
+```text
 Movie
   ↓
 Event
@@ -193,5 +208,6 @@ Payment
 Ticket
   ↓
 TicketValidation
+```
 
 Esta estrutura permite acompanhar o ciclo completo desde a criação de uma sessão até à validação do ingresso na entrada do cinema.

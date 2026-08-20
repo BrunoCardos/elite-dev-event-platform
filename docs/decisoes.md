@@ -13,7 +13,7 @@ Foi escolhido React com Vite para o frontend.
 - Adequado para uma aplicação SPA;
 - Permite desenvolvimento rápido dentro do prazo do desafio.
 
----
+
 
 ## NestJS
 
@@ -27,7 +27,6 @@ Foi escolhido NestJS para o backend.
 - Facilita a criação de APIs REST;
 - Boa escalabilidade para projetos maiores.
 
----
 
 ## Prisma
 
@@ -44,7 +43,6 @@ Foi escolhido Prisma como ORM.
 
 TypeORM foi considerado, mas Prisma foi escolhido por permitir uma implementação mais rápida e previsível dentro do prazo disponível.
 
----
 
 ## PostgreSQL
 
@@ -60,7 +58,6 @@ PostgreSQL foi utilizado como banco de dados relacional.
 
 Durante o desenvolvimento local foi utilizado PostgreSQL instalado diretamente na máquina.
 
----
 
 ## React Router
 
@@ -77,7 +74,6 @@ As principais áreas são:
 - Criação de eventos;
 - Gatekeeper.
 
----
 
 ## TMDb
 
@@ -87,7 +83,7 @@ O sistema utiliza o identificador do filme no TMDb para relacionar o evento ao f
 
 Isso evita a necessidade de manter manualmente todas as informações cinematográficas no sistema.
 
----
+
 
 ## Mapa de assentos
 
@@ -102,7 +98,6 @@ Ao criar um evento, o organizador define:
 
 O sistema gera automaticamente os assentos.
 
----
 
 ## Reservas
 
@@ -114,7 +109,6 @@ As reservas são associadas a:
 
 O fluxo permite controlar a disponibilidade dos assentos antes da conclusão da compra.
 
----
 
 ## Tickets
 
@@ -124,7 +118,6 @@ Cada ticket possui um identificador seguro utilizado para gerar o QR Code.
 
 O QR Code pode ser posteriormente validado pelo Gatekeeper.
 
----
 
 ## Gatekeeper
 
@@ -138,8 +131,6 @@ O Gatekeeper pode:
 - Verificar o assento;
 - Impedir a utilização duplicada do ingresso.
 
----
-
 ## Controle de acesso
 
 A aplicação possui três perfis principais:
@@ -150,7 +141,7 @@ A aplicação possui três perfis principais:
 
 Cada perfil possui uma área específica da aplicação.
 
----
+
 
 ## Inteligência Artificial
 
