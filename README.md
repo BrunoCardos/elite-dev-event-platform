@@ -71,6 +71,7 @@ Após iniciar o backend, a documentação pode ser acessada em:
 ```bash
 cd backend
 npm install
+npx prisma migrate
 npm run seed
 npm run start:dev
 ```
