@@ -60,44 +60,54 @@ export default function Login() {
 
   return (
     <div className="login-page">
-      <form
-        className="login-card"
-        onSubmit={handleSubmit}
-      >
-        <h1>Elite Cinema</h1>
+      <div className="login-container">
+        <div className="login-card">
 
-        <p>
-          Entre na sua conta
-        </p>
+          <h1>Elite Cinema</h1>
 
-        {error && (
-          <div className="error">
-            {error}
+          <p className="login-subtitle">
+            Entre na sua conta
+          </p>
+
+          <form
+            onSubmit={handleSubmit}
+          >
+
+
+            {error && (
+              <div className="error">
+                {error}
+              </div>
+            )}
+
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) =>
+                setEmail(e.target.value)
+              }
+            />
+
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) =>
+                setPassword(e.target.value)
+              }
+            />
+
+            <button type="submit">
+              Entrar
+            </button>
+          </form>
+          <div className="login-footer">
+            Elite Cinema
           </div>
-        )}
+        </div>
+      </div>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
-        />
-
-        <button type="submit">
-          Entrar
-        </button>
-      </form>
     </div>
   );
 }

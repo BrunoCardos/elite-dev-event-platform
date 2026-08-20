@@ -444,6 +444,83 @@ textarea {
   background: #9ca3af;
 }
 
+ /* =========================
+   LOGIN
+========================= */
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  background: #f3f4f6;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+.login-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 35px;
+  box-shadow: 0 8px 30px rgb(0 0 0 / 8%);
+}
+
+.login-card h1 {
+  margin: 0 0 8px;
+  text-align: center;
+  font-size: 28px;
+}
+
+.login-card .login-subtitle {
+  margin: 0 0 30px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.login-card form {
+  gap: 18px;
+}
+
+.login-card label {
+  color: #374151;
+  font-size: 14px;
+}
+
+.login-card input {
+  margin-top: 5px;
+}
+
+.login-card button[type="submit"] {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+}
+
+.login-error {
+  margin-bottom: 15px;
+  padding: 12px;
+  border-radius: 7px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  font-size: 14px;
+}
+
+.login-footer {
+  margin-top: 25px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+
+
 /* =========================
    MOBILE
 ========================= */
@@ -478,18 +555,5 @@ textarea {
     font-size: 10px;
     color: black;
   }
-/* 
-  .login-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-
-  .login-page form {
-    width: 90%;
-  } */
-
 
 }
